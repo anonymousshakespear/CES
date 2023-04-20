@@ -17,8 +17,8 @@ public static class DatabaseInitialization
         var unitOfWorkManager = serviceScope.ServiceProvider.GetRequiredService<IUnitOfWorkManager>();
         await using (var unitOfWork = unitOfWorkManager.Initiate())
         {
-            await SeedUsers(context);
-            await SeedLocationsAndRoutes(context);
+            //await SeedUsers(context);
+            //await SeedLocationsAndRoutes(context);
 
             unitOfWork.Commit();
         }

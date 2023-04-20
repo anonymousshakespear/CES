@@ -1,43 +1,39 @@
 ﻿
+using Netcompany.Net.DomainDrivenDesign.Models;
+
 namespace RoutePlanning.Domain.Locations.Models;
-public class Booking
+public class Booking : AggregateRoot<Booking>
 {
-    private int ID;
-    private int packageID;
-    private string productCategory;
-    private int userID;
-    private int startingCityID;
-    private int destinationCityID;
-    private float height;
-    private float weight;
-    private float depth;
-    private float length;
-    private string remark;
-    private string receiverInformation;
-    private float cost;
-    private DateTime bookingDate;
-    private string status;
-    private DateTime rowVersion;
+    public int PackageID { get; set; }
+    public string ProductCategory { get; set; }
+    public UserProfile User { get; set; }
+    public City StartingCity { get; set; }
+    public City DestinationCity { get; set; }
+    public float Height { get; set; }
+    public float Weight { get; set; }
+    public float Depth { get; set; }
+    public float Length { get; set; }
+    public string Remark { get; set; }
+    public string ReceiverInformation { get; set; }
+    public float Cost { get; set; }
+    public DateTime BookingDate { get; set; }
+    public string Status { get; set; }
 
-    public Booking(int id, int packageId, string productCategory, int userId, int startingCityId, int destinationCityId, float height, float weight, float depth, float length, string remark, string receiverInformation, float cost, DateTime bookingDate, string status, DateTime rowVersion)
+    public Booking(int packageId, string productCategory, UserProfile user, City startingCity, City destinationCity, float height, float weight, float depth, float length, string remark, string receiverInformation, float cost, DateTime bookingDate, string status)
     {
-        ID = id;
-        packageID = packageId;
-        this.productCategory = productCategory;
-        userID = userId;
-        startingCityID = startingCityId;
-        destinationCityID = destinationCityId;
-        this.height = height;
-        this.weight = weight;
-        this.depth = depth;
-        this.length = length;
-        this.remark = remark;
-        this.receiverInformation = receiverInformation;
-        this.cost = cost;
-        this.bookingDate = bookingDate;
-        this.status = status;
-        this.rowVersion = rowVersion;
+        PackageID = packageId;
+        ProductCategory = productCategory;
+        User = user;
+        StartingCity = startingCity;
+        DestinationCity = destinationCity;
+        Height = height;
+        Weight = weight;
+        Depth = depth;
+        Length = length;
+        Remark = remark;
+        ReceiverInformation = receiverInformation;
+        Cost = cost;
+        BookingDate = bookingDate;
+        Status = status;
     }
-
-    public Booking () {}
 }

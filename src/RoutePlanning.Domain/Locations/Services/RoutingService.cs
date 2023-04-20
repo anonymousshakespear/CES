@@ -6,8 +6,9 @@ using RoutePlanning.Domain.Locations.Services.Interfaces;
 namespace RoutePlanning.Domain.Locations.Services;
 public class RoutingService: IRoutingService
 {
-    public static (int time, int price) FindShortestRoute(string cityFrom, string cityTo, string productCategory, int weight)
+    public static (int time, int price) FindShortestRoute(string cityFrom, string cityTo, string productCategory, int weight, string date="")
     {
+
 
         var locationList = new List<Location>();
 
@@ -27,7 +28,7 @@ public class RoutingService: IRoutingService
         {
             var locationA = cityDict[cityA];
             var locationB = cityDict[cityB];
-            var (timeAB, priceAB) = CalculateTimeAndCostOfSegmet( cityA,  cityB,  productCategory,  weight);
+            var (timeAB, priceAB) = CalculateTimeAndCostOfSegmet( cityA,  cityB,  productCategory,  weight, date);
             if ((timeAB, priceAB) != (-1,-1))
             {
                 locationA.AddConnection(locationB, 0, timeAB, priceAB, timeAB);
@@ -53,7 +54,7 @@ public class RoutingService: IRoutingService
         {
             var locationA = cityDictOceanic[cityA];
             var locationB = cityDictOceanic[cityB];
-            var (timeAB, priceAB) = CalculateTimeAndCostOfSegmetOceanic(cityA, cityB, productCategory, weight);
+            var (timeAB, priceAB) = CalculateTimeAndCostOfSegmetOceanic(cityA, cityB, productCategory, weight, date);
             if ((timeAB, priceAB) != (-1, -1))
             {
                 locationA.AddConnection(locationB, 0, timeAB, priceAB, timeAB);
@@ -84,14 +85,22 @@ public class RoutingService: IRoutingService
         // Act
         var locationFrom = cityDict[cityFrom];
         var locationTo = cityDict[cityTo];
+        IEnumerable<Connection> path;
+        try
+        {
+            path = shortestDistanceService.CalculateShortestPath(locationFrom, locationTo);
 
-        var path = shortestDistanceService.CalculateShortestPath(locationFrom, locationTo);
+        }
+        catch
+        {
+            return (-1, -1);
+        }
 
         var (time, price) = ShortestDistanceService.CalculateTimePrice(path);
         return (time, price);
     }
 
-    private static (int timeAB, int priceAB) CalculateTimeAndCostOfSegmetOceanic(string cityA, string cityB, string productCategory, int weight)
+    private static (int timeAB, int priceAB) CalculateTimeAndCostOfSegmetOceanic(string cityA, string cityB, string productCategory, int weight,string date)
     {
         return (5, 40);
     }
@@ -185,7 +194,7 @@ public class RoutingService: IRoutingService
         return connections;
     }
 
-    public static (int time, int price) CalculateTimeAndCostOfSegmet(string cityA, string cityB,string productCategory,int weight)
+    public static (int time, int price) CalculateTimeAndCostOfSegmet(string cityA, string cityB,string productCategory,int weight,string date="")
     {
         
         var connections = new List<(string, string,int)>
@@ -230,7 +239,7 @@ public class RoutingService: IRoutingService
             return (-1, -1);
         }
 
-        var (priceRate, timeRate) = GetRates(productCategory, weight);
+        var (priceRate, timeRate) = GetRates(productCategory, weight, date);
         if ((priceRate, timeRate) == (-1, -1))
         {
             return (-1, -1);
@@ -242,11 +251,34 @@ public class RoutingService: IRoutingService
         return (time, price);
     }
 
-    private static (double priceRate, double timeRate) GetRates(string productCategory, int weight)
+    private static (double priceRate, double timeRate) GetRates(string productCategory, int weight, string date)
     {
+        DateTime givenDateTime;
+        try
+        {
+            givenDateTime = DateTime.Parse(date);
+        }
+        catch
+        {
+            givenDateTime = DateTime.Now;
+        }
 
-        var priceRate = 8.0;
-        var timeRate = 12.0;
+        double priceRate;
+        double timeRate;
+        if (givenDateTime.Month >= 11 || givenDateTime.Month <= 4) //Chek if we are between Novenmber and April 
+        {
+             priceRate = 8.0;
+             timeRate = 12.0;
+
+        }
+        else
+        {
+            priceRate = 5.0;
+            timeRate = 12.0;
+        }
+
+
+
         if (productCategory.Contains("Weapons"))
         {
             priceRate = (priceRate* 1.2);
@@ -271,6 +303,10 @@ public class RoutingService: IRoutingService
         {
             return (-1, -1);
         }
+
+
+
+
 
         return (priceRate, timeRate);
     }

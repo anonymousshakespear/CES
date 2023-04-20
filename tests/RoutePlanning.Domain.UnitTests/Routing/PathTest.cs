@@ -45,7 +45,7 @@ public sealed class PathTest
     }
 
     [Fact]
-    public void TestPriceChange()
+    public void TestPriceChangeCatagory()
     {
         var cityB = "Dakar";
         var cityA = "Cape Town";
@@ -54,6 +54,41 @@ public sealed class PathTest
         var (time, price) = RoutingService.FindShortestRoute(cityA, cityB, productCategory, weight);
         Assert.Equal(228, time);
         Assert.Equal((int)(152*1.2*1.25), price);
+
+
+    }
+
+    [Fact]
+    public void TestCancellationCatagory()
+    {
+        var cityB = "Dakar";
+        var cityA = "Cape Town";
+
+        var productCategory = "Cautious parcels";
+        var weight = 10;
+        var (time, price) = RoutingService.FindShortestRoute(cityA, cityB, productCategory, weight);
+        Assert.Equal(-1, time);
+        Assert.Equal(-1, price);
+    }
+
+
+
+    [Fact]
+    public void TestPriceChangeTime()
+    {
+        var cityB = "Dakar";
+        var cityA = "Cape Town";
+        var productCategory = "";
+        var date = "2023-01-15";
+        var weight = 10;
+        var (time, price) = RoutingService.FindShortestRoute(cityA, cityB, productCategory, weight,date);
+        Assert.Equal(228, time);
+        Assert.Equal((int)(152), price);
+
+        date = "2023-06-15";
+        (time, price) = RoutingService.FindShortestRoute(cityA, cityB, productCategory, weight,date);
+        Assert.Equal(228, time);
+        Assert.Equal((int)(152.0/8*5), price);
     }
 
     [Fact]

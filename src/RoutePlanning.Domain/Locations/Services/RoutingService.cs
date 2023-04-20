@@ -231,17 +231,47 @@ public class RoutingService: IRoutingService
         }
 
         var (priceRate, timeRate) = GetRates(productCategory, weight);
-        var time = timeRate * segmentLength;
-        var price = priceRate * segmentLength;
+        if ((priceRate, timeRate) == (-1, -1))
+        {
+            return (-1, -1);
+        }
+
+        var time = (int)(timeRate * segmentLength);
+        var price = (int)(priceRate * segmentLength);
 
         return (time, price);
     }
 
-    private static (int priceRate,int timeRate) GetRates(string productCategory, int weight)
+    private static (double priceRate, double timeRate) GetRates(string productCategory, int weight)
     {
-        var priceRate = 8;
-        var timeRate = 12;
-     
+
+        var priceRate = 8.0;
+        var timeRate = 12.0;
+        if (productCategory.Contains("Weapons"))
+        {
+            priceRate = (priceRate* 1.2);
+        }
+
+        if (productCategory.Contains("Refrigerated goods"))
+        {
+            priceRate = (priceRate * 1.1);
+        }
+
+        if (productCategory.Contains("Live animals"))
+        {
+            priceRate = (priceRate * 1.25);
+        }
+
+        if (productCategory.Contains("Cautious parcels"))
+        {
+            return (-1,-1);
+        }
+
+        if (productCategory.Contains("Recorded Delivery"))
+        {
+            return (-1, -1);
+        }
+
         return (priceRate, timeRate);
     }
 }

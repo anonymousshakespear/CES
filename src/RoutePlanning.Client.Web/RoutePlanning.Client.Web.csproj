@@ -27,4 +27,8 @@
     <Folder Include="DTO\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Api\NewFolder\" />
+  </ItemGroup>
+
 </Project>

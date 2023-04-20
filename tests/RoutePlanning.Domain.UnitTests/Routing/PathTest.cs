@@ -32,14 +32,25 @@ public sealed class PathTest
         Assert.Equal(5, distance);
     }
     [Fact]
-    public void ShortestPathTestOnMap()
+    public void TestIntegrationOnMap()
     {
         var cityB = "Dakar";
         var cityA = "Cape Town";
-        var productCategory = new StubProductCategory();
+        var productCategory = "";
         var weight = 10;
         var (time,price)= RoutingService.FindShortestRoute(cityA, cityB,productCategory,weight);
         Assert.Equal(228,time);
+    }
+    [Fact]
+
+    public void ShortestPathTestOnMap()
+    {
+        var cityB = "Walvis Bay";
+        var cityA = "Cape Town";
+        var productCategory = "";
+        var weight = 10;
+        var (time, price) = RoutingService.FindShortestRoute(cityA, cityB, productCategory, weight);
+        Assert.Equal(5, time);
     }
 }
 

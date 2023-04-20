@@ -51,8 +51,8 @@ public class RoutingService: IRoutingService
 
         foreach (var (cityA, cityB) in simpleConnectiosOceanic)
         {
-            var locationA = cityDict[cityA];
-            var locationB = cityDict[cityB];
+            var locationA = cityDictOceanic[cityA];
+            var locationB = cityDictOceanic[cityB];
             var (timeAB, priceAB) = CalculateTimeAndCostOfSegmetOceanic(cityA, cityB, productCategory, weight);
             if ((timeAB, priceAB) != (-1, -1))
             {
@@ -61,7 +61,23 @@ public class RoutingService: IRoutingService
             }
         }
 
+        foreach (var location in locationList)
+        {
+            var locationOC = cityDictOceanic[location.Name];
 
+            if (location.Name.Equals(cityFrom) || location.Name.Equals(cityTo))
+            {
+                locationOC.AddConnection(location, 0, 0, 0,0);
+                location.AddConnection(locationOC, 0, 0, 0, 0);
+            }
+            else
+            {
+                locationOC.AddConnection(location, 0, 10, 0, 10);
+                location.AddConnection(locationOC, 0, 10, 0, 10);
+            }
+        }
+
+        locationList.AddRange(locationListOceanic);
 
         var shortestDistanceService = new ShortestDistanceService(locationList.AsQueryable());
 
@@ -75,19 +91,17 @@ public class RoutingService: IRoutingService
         return (time, price);
     }
 
-    private static (int timeAB, int priceAB) CalculateTimeAndCostOfSegmetOceanic(string cityA, string cityB, ProductCategory productCategory, int weight)
+    private static (int timeAB, int priceAB) CalculateTimeAndCostOfSegmetOceanic(string cityA, string cityB, string productCategory, int weight)
     {
-        
+        return (5, 40);
     }
 
     private static List<(string, string)> GetPossibleConnectionsOceanic()
     {
         var connections = new List<(string, string)>
         {
-            ("Canary Islands","Tangiers"),
+            ("Cape Town","Walvis Bay"),
         };
-
-
         return connections;
     }
 

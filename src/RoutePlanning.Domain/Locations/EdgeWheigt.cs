@@ -4,11 +4,11 @@ using Netcompany.Net.DomainDrivenDesign.Models;
 namespace RoutePlanning.Domain.Locations;
 
 [DebuggerDisplay("{Value} km")]
-public sealed record Distance : IValueObject
+public sealed record EdgeWheight : IValueObject
 {
-    public Distance(int value)
+    public EdgeWheight(int value)
     {
-        if (value <= 0)
+        if (value < 0)
         {
             throw new ArgumentOutOfRangeException(nameof(value), "A distance must be greater than zero");
         }
@@ -18,7 +18,7 @@ public sealed record Distance : IValueObject
 
     public int Value { get; private set; }
 
-    public static implicit operator Distance(int distance) => new(distance);
+    public static implicit operator EdgeWheight(int distance) => new(distance);
 
-    public static implicit operator int(Distance distance) => distance.Value;
+    public static implicit operator int(EdgeWheight distance) => distance.Value;
 }

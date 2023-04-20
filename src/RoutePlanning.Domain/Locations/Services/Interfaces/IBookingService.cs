@@ -8,10 +8,10 @@ public interface IBookingService
 {
     //Return booking number
     string makeBooking(IEnumerable<Connection> path, double price, DateTime shippinDateTime, double width,
-        double height, double length, ProductCategory productCategory, String packageID);
+        double height, double length, ProductCategory productCategory, string packageID);
 
     string makeBookingWithTheThirdParty(Connection route, double price, DateTime shippinDateTime, double width,
-        double height, double length, ProductCategory productCategory, String packageID);
+        double height, double length, ProductCategory productCategory, string packageID);
 
     bool cancelBooking(string bookingID);
 
@@ -22,4 +22,12 @@ public interface IBookingService
     Booking[] viewUserBookings();
 
 
+}
+
+public interface Booking
+{
+}
+
+public interface ProductCategory
+{
 }

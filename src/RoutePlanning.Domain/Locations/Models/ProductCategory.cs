@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Netcompany.Net.DomainDrivenDesign.Models;
 
 namespace RoutePlanning.Domain.Locations.Models;
-public class ProductCategory
+public class ProductCategory : AggregateRoot<ProductCategory>
 {
-    private int ID;
-    private string category;
-    private float cost;
-    private DateTime rowVersion;
+    public string category { get; set; }
+    public float cost { get; set; }
+    public DateTime rowVersion { get; set; }
 
-    public ProductCategory() {}
+    public ProductCategory(string category, float cost, DateTime rowVersion)
+    {
+        this.category = category;
+        this.cost = cost;
+        this.rowVersion = rowVersion;
+    }
 }

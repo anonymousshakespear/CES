@@ -47,7 +47,7 @@ public sealed class Program
             app.UseUnhandledExceptionMiddleware();
         }
 
-        app.Map(new PathString(""), client =>
+        app.MapWhen(x => IsAllowOverride(x), client =>
         {
             client.UseSpaStaticFiles();
             client.UseSpa(spa => { });
@@ -63,8 +63,16 @@ public sealed class Program
         app.MapBlazorHub();
         app.MapFallbackToPage("/_Host");
         app.UseSwagger();
-        app.UseSwaggerUI();
+        app.UseSwaggerUI(swagger => {
+            swagger.RoutePrefix = "swg";
+        });
 
         app.Run();
+    }
+    public static bool IsAllowOverride(HttpContext x)
+    {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+        return !x.Request.Path.Value.StartsWith("/api") && !x.Request.Path.Value.StartsWith("/swg");
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
     }
 }

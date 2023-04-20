@@ -8,9 +8,9 @@ public sealed record Distance : IValueObject
 {
     public Distance(int value)
     {
-        if (value <= 0)
+        if (value < 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(value), "A distance must be greater than zero");
+            throw new ArgumentOutOfRangeException(nameof(value), "A distance must be greater or equal ot than zero");
         }
 
         Value = value;

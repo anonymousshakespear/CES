@@ -13,16 +13,10 @@ public sealed class SelectableCityQueryhandler : IQueryHandler<SelectableCityQue
         _cities = cities;
     }
 
-    public async Task<IReadOnlyList<SelectableCity>> Handle(SelectableLocationListQuery _, CancellationToken cancellationToken)
+    public async Task<IReadOnlyList<SelectableCity>> Handle(SelectableCityQuery _, CancellationToken cancellationToken)
     {
         return await _cities
             .Select(l => new SelectableCity(l.Id, l.name, l.status, l.dataRowVersion))
             .ToListAsync(cancellationToken);
     }
-
-    public Task<IReadOnlyList<SelectableCity>> Handle(SelectableCityQuery request, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
-
 }

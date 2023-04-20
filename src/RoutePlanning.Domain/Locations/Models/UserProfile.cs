@@ -1,6 +1,8 @@
-﻿using Netcompany.Net.DomainDrivenDesign.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Netcompany.Net.DomainDrivenDesign.Models;
 
 namespace RoutePlanning.Domain.Locations.Models;
+[Table("UserProfile_T")]
 public class UserProfile : AggregateRoot<UserProfile>
 {
     public string Name { get; set; }

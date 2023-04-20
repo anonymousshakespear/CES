@@ -7,6 +7,8 @@ using Newtonsoft.Json;
 using RoutePlanning.Application.Locations.Commands.CreateTwoWayConnection;
 using RoutePlanning.Application.Locations.Commands.GetSegment;
 using RoutePlanning.Client.Web.Shared;
+using RoutePlanning.Domain.Locations.Services;
+using RoutePlanning.Application.Locations.Commands.FindPath;
 
 namespace RoutePlanning.Client.Web.Api;
 
@@ -214,11 +216,19 @@ public sealed class RoutesController : ControllerBase
     }
 
     [HttpPost("[action]")]
+    public async Task<SegmentDto> FindShortestPath(FindShortestPathCommand command)
+    {
+        var (time, price) = RoutingService.FindShortestRoute(command.From, command.To, command.Category, command.Weight);
+        var SegmentDto = new SegmentDto(price, time);
+        return await Task.FromResult(SegmentDto);
+    }
+
+    [HttpPost("[action]")]
     public async Task<SegmentDto> GetSegment(GetSegmentCommand command)
     {
-        var _ = command;
-        var tempObject = new SegmentDto(50, 8);
-        return await Task.FromResult(tempObject);
+        var (time, price) = RoutingService.CalculateTimeAndCostOfSegmet(command.Start, command.End, string.Empty, command.Weight);
+        var SegmentDto = new SegmentDto(price, time);
+        return await Task.FromResult(SegmentDto);
     }
 
     [HttpPost("[action]")]

@@ -53,7 +53,6 @@ public sealed class Program
             client.UseSpa(spa => { });
         });
 
-
         app.UseValidationMiddleware();
         app.UseHttpsRedirection();
         app.UseStaticFiles();

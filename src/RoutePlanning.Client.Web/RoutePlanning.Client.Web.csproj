@@ -21,4 +21,8 @@
     <ProjectReference Include="..\RoutePlanning.Infrastructure\RoutePlanning.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Api\NewFolder\" />
+  </ItemGroup>
+
 </Project>

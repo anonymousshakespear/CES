@@ -86,8 +86,8 @@ public sealed class RoutesController : ControllerBase
 
                     var userResult = new GetSegmentResponseDto()
                     {
-                        cost = Convert.ToDouble(_dataResponse["Cost"].ToString()),
-                        time = Convert.ToDouble(_dataResponse["Time"].ToString()),
+                        cost = Convert.ToDouble(_dataResponse?.Value<double>("Cost").ToString()),
+                        time = Convert.ToDouble(_dataResponse?.Value<int>("Time").ToString()),
                     };
                 }
             }
@@ -133,9 +133,9 @@ public sealed class RoutesController : ControllerBase
 
                     var userResult = new BookSegmentResponseDto()
                     {
-                        confirmationID = _dataResponse["ConfirmationID"].ToString(),
-                        cost = Convert.ToDouble(_dataResponse["Cost"].ToString()),
-                        time = Convert.ToDouble(_dataResponse["Time"].ToString()),
+                        confirmationID = _dataResponse.Value<string>("ConfirmationID") ?? "0",
+                        cost = Convert.ToDouble(_dataResponse?.Value<double>("Cost").ToString()),
+                        time = Convert.ToDouble(_dataResponse?.Value<int>("Time").ToString()),
                     };
                 }
             }

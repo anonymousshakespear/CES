@@ -1,7 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using RoutePlanning.Application.Locations.Commands.BookSegment;
 using RoutePlanning.Application.Locations.Commands.CreateTwoWayConnection;
+using RoutePlanning.Application.Locations.Commands.GetSegment;
 using RoutePlanning.Client.Web.Authorization;
 
 namespace RoutePlanning.Client.Web.Api;
@@ -28,5 +30,27 @@ public sealed class RoutesController : ControllerBase
     public async Task AddTwoWayConnection(CreateTwoWayConnectionCommand command)
     {
         await _mediator.Send(command);
+    }
+
+    [HttpPost("[action]")]
+    public async Task<SegmentDto> GetSegment(GetSegmentCommand command)
+    {
+        var _ = command;
+        var tempObject = new SegmentDto(50, 8);
+        return await Task.FromResult(tempObject);
+    }
+
+    [HttpPost("[action]")]
+    public async Task<ConfirmationDto> BookSegment(BookSegmentCommand command)
+    {
+        var _ = command;
+        var tempObject = new ConfirmationDto("abc", 50, 8);
+        return await Task.FromResult(tempObject);
+    }
+
+    [HttpPost("[action]")]
+    public void DeleteBooking(BookSegmentCommand command)
+    {
+        var _ = command;
     }
 }

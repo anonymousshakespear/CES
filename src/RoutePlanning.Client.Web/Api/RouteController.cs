@@ -2,9 +2,11 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using RoutePlanning.Application.Locations.Commands.BookSegment;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using RoutePlanning.Application.Locations.Commands.CreateTwoWayConnection;
+using RoutePlanning.Application.Locations.Commands.GetSegment;
 using RoutePlanning.Client.Web.Authorization;
 using RoutePlanning.Client.Web.Shared;
 
@@ -212,5 +214,27 @@ public sealed class RoutesController : ControllerBase
         {
             return await Task.FromResult("Hello Worldwdwdwdwdwd!").ConfigureAwait(false);
         }
+    }
+
+    [HttpPost("[action]")]
+    public async Task<SegmentDto> GetSegment(GetSegmentCommand command)
+    {
+        var _ = command;
+        var tempObject = new SegmentDto(50, 8);
+        return await Task.FromResult(tempObject);
+    }
+
+    [HttpPost("[action]")]
+    public async Task<ConfirmationDto> BookSegment(BookSegmentCommand command)
+    {
+        var _ = command;
+        var tempObject = new ConfirmationDto("abc", 50, 8);
+        return await Task.FromResult(tempObject);
+    }
+
+    [HttpDelete("[action]")]
+    public void DeleteBooking(BookSegmentCommand command)
+    {
+        var _ = command;
     }
 }

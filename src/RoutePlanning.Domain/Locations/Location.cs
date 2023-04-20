@@ -17,6 +17,15 @@ public sealed class Location : AggregateRoot<Location>
 
     public IReadOnlyCollection<Connection> Connections => _connections.AsReadOnly();
 
+    public Connection AddConnection(Location destination, int distance,int time, int price, int EdgeWheigt)
+    {
+        Connection connection = new(this, destination, distance,time,price, EdgeWheigt);
+
+        _connections.Add(connection);
+
+        return connection;
+    }
+
     public Connection AddConnection(Location destination, int distance)
     {
         Connection connection = new(this, destination, distance);

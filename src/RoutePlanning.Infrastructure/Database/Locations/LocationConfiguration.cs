@@ -9,6 +9,7 @@ public sealed class LocationConfiguration : IEntityTypeConfiguration<Location>
     public void Configure(EntityTypeBuilder<Location> builder)
     {
         builder.HasKey(x => x.Id);
+        builder.HasMany(x => x.Connections).WithOne(x => x.Source);
 
         builder.HasMany(x => x.Connections).WithOne(x => x.Source).OnDelete(DeleteBehavior.NoAction);
 

@@ -14,7 +14,7 @@ public sealed class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddRoutePlanningInfrastructure(builder.Configuration);
+        builder.Services.AddRoutePlanningInfrastructure();
         builder.Services.AddRoutePlanningApplication();
 
         builder.Services.AddCqs(options => options.UseValidation().UseUnitOfWork());
@@ -30,6 +30,11 @@ public sealed class Program
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+        builder.Services.AddSpaStaticFiles(configuration =>
+        {
+            configuration.RootPath = "./wwwroot/react/build";
+
+        });
 
         builder.Host.ConfigureLoggingDefaults();
 
@@ -41,6 +46,12 @@ public sealed class Program
         {
             app.UseUnhandledExceptionMiddleware();
         }
+
+        app.Map(new PathString(""), client =>
+        {
+            client.UseSpaStaticFiles();
+            client.UseSpa(spa => { });
+        });
 
         app.UseValidationMiddleware();
         app.UseHttpsRedirection();

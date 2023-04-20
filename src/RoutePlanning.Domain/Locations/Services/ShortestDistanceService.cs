@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RoutePlanning.Domain.Locations.Services.Interfaces;
 
 namespace RoutePlanning.Domain.Locations.Services;
 
@@ -37,19 +38,19 @@ public sealed class ShortestDistanceService : IShortestDistanceService
     /// </summary>
     private static Dictionary<Location, (Connection? SourceConnection, int Distance)> CalculateShortestConnections(IEnumerable<Location> locations, Location start, Location end)
     {
-        var shortestConnections = new Dictionary<Location, (Connection? SourceConnection, int Distance)>();
+        var shortestConnections = new Dictionary<Location, (Connection? SourceConnection, int EdgeWeight)>();
         var unvisitedLocations = locations.ToHashSet();
 
         foreach (var location in unvisitedLocations)
         {
-            shortestConnections[location] = (SourceConnection: null, Distance: int.MaxValue);
+            shortestConnections[location] = (SourceConnection: null, EdgeWeight: int.MaxValue);
         }
 
-        shortestConnections[start] = (SourceConnection: null, Distance: 0);
+        shortestConnections[start] = (SourceConnection: null, EdgeWeight: 0);
 
         while (unvisitedLocations.Count > 0)
         {
-            var location = unvisitedLocations.OrderBy(location => shortestConnections[location].Distance).First();
+            var location = unvisitedLocations.OrderBy(location => shortestConnections[location].EdgeWeight).First();
 
             if (location == end)
             {

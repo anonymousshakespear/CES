@@ -48,7 +48,7 @@ public sealed class RoutesController : ControllerBase
         return await Task.FromResult(tempObject);
     }
 
-    [HttpPost("[action]")]
+    [HttpDelete("[action]")]
     public void DeleteBooking(BookSegmentCommand command)
     {
         var _ = command;

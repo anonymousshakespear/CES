@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\RoutePlanning.Client.Web\RoutePlanning.Client.Web.csproj" />
     <ProjectReference Include="..\..\src\RoutePlanning.Domain\RoutePlanning.Domain.csproj" />
   </ItemGroup>
 

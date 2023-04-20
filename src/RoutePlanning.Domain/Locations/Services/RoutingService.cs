@@ -35,6 +35,50 @@ public class RoutingService: IRoutingService
             }
         }
 
+
+        var locationListOceanic = new List<Location>();
+        var cityNamesOceanic = GetCityNames();
+        var cityDictOceanic = new Dictionary<string, Location>();
+
+        foreach (var cityName in cityNamesOceanic)
+        {
+            var location = new Location(cityName);
+            locationListOceanic.Add(location);
+            cityDictOceanic.Add(cityName, location);
+        }
+
+        var simpleConnectiosOceanic = GetPossibleConnectionsOceanic();
+
+        foreach (var (cityA, cityB) in simpleConnectiosOceanic)
+        {
+            var locationA = cityDictOceanic[cityA];
+            var locationB = cityDictOceanic[cityB];
+            var (timeAB, priceAB) = CalculateTimeAndCostOfSegmetOceanic(cityA, cityB, productCategory, weight);
+            if ((timeAB, priceAB) != (-1, -1))
+            {
+                locationA.AddConnection(locationB, 0, timeAB, priceAB, timeAB);
+                locationB.AddConnection(locationA, 0, timeAB, priceAB, timeAB);
+            }
+        }
+
+        foreach (var location in locationList)
+        {
+            var locationOC = cityDictOceanic[location.Name];
+
+            if (location.Name.Equals(cityFrom) || location.Name.Equals(cityTo))
+            {
+                locationOC.AddConnection(location, 0, 0, 0,0);
+                location.AddConnection(locationOC, 0, 0, 0, 0);
+            }
+            else
+            {
+                locationOC.AddConnection(location, 0, 10, 0, 10);
+                location.AddConnection(locationOC, 0, 10, 0, 10);
+            }
+        }
+
+        locationList.AddRange(locationListOceanic);
+
         var shortestDistanceService = new ShortestDistanceService(locationList.AsQueryable());
 
         // Act
@@ -45,6 +89,20 @@ public class RoutingService: IRoutingService
 
         var (time, price) = ShortestDistanceService.CalculateTimePrice(path);
         return (time, price);
+    }
+
+    private static (int timeAB, int priceAB) CalculateTimeAndCostOfSegmetOceanic(string cityA, string cityB, string productCategory, int weight)
+    {
+        return (5, 40);
+    }
+
+    private static List<(string, string)> GetPossibleConnectionsOceanic()
+    {
+        var connections = new List<(string, string)>
+        {
+            ("Cape Town","Walvis Bay"),
+        };
+        return connections;
     }
 
     private static List<string> GetCityNames()
@@ -142,9 +200,9 @@ public class RoutingService: IRoutingService
                     ("Cape Guardafui","Mozambique",     8),
                     ("Mozambique", "Cape St. Marie",     3),
                     ("Cape St. Marie", "Cape Town",      8),
-                    ("Cape Town",   "Hvalbugten",     3),
+                    ("Cape Town",   "Walvis Bay",     3),
                     ("Cape Town",   "Saint Helena",       9),
-                    ("Hvalbugten", "Slave Coast",    9),
+                    ("Walvis Bay", "Slave Coast",    9),
                     ("Slave Coast", "Gold Coast",     4),
                     ("Sierra Leone", "Gold Coast",     4),
                     ("Hvalbugten", "Gold Coast",11),
@@ -173,17 +231,47 @@ public class RoutingService: IRoutingService
         }
 
         var (priceRate, timeRate) = GetRates(productCategory, weight);
-        var time = timeRate * segmentLength;
-        var price = priceRate * segmentLength;
+        if ((priceRate, timeRate) == (-1, -1))
+        {
+            return (-1, -1);
+        }
+
+        var time = (int)(timeRate * segmentLength);
+        var price = (int)(priceRate * segmentLength);
 
         return (time, price);
     }
 
-    private static (int priceRate,int timeRate) GetRates(string productCategory, int weight)
+    private static (double priceRate, double timeRate) GetRates(string productCategory, int weight)
     {
-        var priceRate = 8;
-        var timeRate = 12;
-     
+
+        var priceRate = 8.0;
+        var timeRate = 12.0;
+        if (productCategory.Contains("Weapons"))
+        {
+            priceRate = (priceRate* 1.2);
+        }
+
+        if (productCategory.Contains("Refrigerated goods"))
+        {
+            priceRate = (priceRate * 1.1);
+        }
+
+        if (productCategory.Contains("Live animals"))
+        {
+            priceRate = (priceRate * 1.25);
+        }
+
+        if (productCategory.Contains("Cautious parcels"))
+        {
+            return (-1,-1);
+        }
+
+        if (productCategory.Contains("Recorded Delivery"))
+        {
+            return (-1, -1);
+        }
+
         return (priceRate, timeRate);
     }
 }

@@ -23,4 +23,8 @@
     <ProjectReference Include="..\RoutePlanning.Infrastructure\RoutePlanning.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTO\" />
+  </ItemGroup>
+
 </Project>

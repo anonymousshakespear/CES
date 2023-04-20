@@ -30,6 +30,11 @@ public sealed class Program
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+        builder.Services.AddSpaStaticFiles(configuration =>
+        {
+            configuration.RootPath = "./wwwroot/react/build";
+
+        });
 
         builder.Host.ConfigureLoggingDefaults();
 
@@ -41,6 +46,12 @@ public sealed class Program
         {
             app.UseUnhandledExceptionMiddleware();
         }
+
+        app.Map(new PathString(""), client =>
+        {
+            client.UseSpaStaticFiles();
+            client.UseSpa(spa => { });
+        });
 
         app.UseValidationMiddleware();
         app.UseHttpsRedirection();

@@ -8,6 +8,7 @@ using RoutePlanning.Application.Locations.Commands.CreateTwoWayConnection;
 using RoutePlanning.Application.Locations.Commands.GetSegment;
 using RoutePlanning.Client.Web.Shared;
 using RoutePlanning.Domain.Locations.Services;
+using RoutePlanning.Application.Locations.Commands.FindPath;
 
 namespace RoutePlanning.Client.Web.Api;
 
@@ -212,6 +213,14 @@ public sealed class RoutesController : ControllerBase
         {
             return await Task.FromResult("Hello Worldwdwdwdwdwd!").ConfigureAwait(false);
         }
+    }
+
+    [HttpPost("[action]")]
+    public async Task<SegmentDto> FindShortestPath(FindShortestPathCommand command)
+    {
+        var (time, price) = RoutingService.FindShortestRoute(command.From, command.To, command.Category, command.Weight);
+        var SegmentDto = new SegmentDto(price, time);
+        return await Task.FromResult(SegmentDto);
     }
 
     [HttpPost("[action]")]

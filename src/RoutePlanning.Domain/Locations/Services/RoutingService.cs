@@ -35,6 +35,34 @@ public class RoutingService: IRoutingService
             }
         }
 
+
+        var locationListOceanic = new List<Location>();
+        var cityNamesOceanic = GetCityNames();
+        var cityDictOceanic = new Dictionary<string, Location>();
+
+        foreach (var cityName in cityNamesOceanic)
+        {
+            var location = new Location(cityName);
+            locationListOceanic.Add(location);
+            cityDictOceanic.Add(cityName, location);
+        }
+
+        var simpleConnectiosOceanic = GetPossibleConnectionsOceanic();
+
+        foreach (var (cityA, cityB) in simpleConnectiosOceanic)
+        {
+            var locationA = cityDict[cityA];
+            var locationB = cityDict[cityB];
+            var (timeAB, priceAB) = CalculateTimeAndCostOfSegmetOceanic(cityA, cityB, productCategory, weight);
+            if ((timeAB, priceAB) != (-1, -1))
+            {
+                locationA.AddConnection(locationB, 0, timeAB, priceAB, timeAB);
+                locationB.AddConnection(locationA, 0, timeAB, priceAB, timeAB);
+            }
+        }
+
+
+
         var shortestDistanceService = new ShortestDistanceService(locationList.AsQueryable());
 
         // Act
@@ -45,6 +73,22 @@ public class RoutingService: IRoutingService
 
         var (time, price) = ShortestDistanceService.CalculateTimePrice(path);
         return (time, price);
+    }
+
+    private static (int timeAB, int priceAB) CalculateTimeAndCostOfSegmetOceanic(string cityA, string cityB, ProductCategory productCategory, int weight)
+    {
+        
+    }
+
+    private static List<(string, string)> GetPossibleConnectionsOceanic()
+    {
+        var connections = new List<(string, string)>
+        {
+            ("Canary Islands","Tangiers"),
+        };
+
+
+        return connections;
     }
 
     private static List<string> GetCityNames()
@@ -142,9 +186,9 @@ public class RoutingService: IRoutingService
                     ("Cape Guardafui","Mozambique",     8),
                     ("Mozambique", "Cape St. Marie",     3),
                     ("Cape St. Marie", "Cape Town",      8),
-                    ("Cape Town",   "Hvalbugten",     3),
+                    ("Cape Town",   "Walvis Bay",     3),
                     ("Cape Town",   "Saint Helena",       9),
-                    ("Hvalbugten", "Slave Coast",    9),
+                    ("Walvis Bay", "Slave Coast",    9),
                     ("Slave Coast", "Gold Coast",     4),
                     ("Sierra Leone", "Gold Coast",     4),
                     ("Hvalbugten", "Gold Coast",11),

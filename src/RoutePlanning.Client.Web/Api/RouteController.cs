@@ -84,11 +84,13 @@ public sealed class RoutesController : ControllerBase
 
                     var _dataResponse = JToken.Parse(JsonConvert.SerializeObject(finalData));
 
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                     var userResult = new GetSegmentResponseDto()
                     {
                         cost = Convert.ToDouble(_dataResponse["Cost"].ToString()),
                         time = Convert.ToDouble(_dataResponse["Time"].ToString()),
                     };
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
                 }
             }
 
@@ -130,13 +132,17 @@ public sealed class RoutesController : ControllerBase
 
                     var finalData = await response.Content.ReadAsStringAsync();
                     var _dataResponse = JToken.Parse(JsonConvert.SerializeObject(finalData));
-
-                    var userResult = new BookSegmentResponseDto()
+                    if (_dataResponse != null)
                     {
-                        confirmationID = _dataResponse["ConfirmationID"].ToString(),
-                        cost = Convert.ToDouble(_dataResponse["Cost"].ToString()),
-                        time = Convert.ToDouble(_dataResponse["Time"].ToString()),
-                    };
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+                        var userResult = new BookSegmentResponseDto()
+                        {
+                            confirmationID = _dataResponse["ConfirmationID"] != null ? _dataResponse["ConfirmationID"].ToString() : "",
+                            cost = Convert.ToDouble(_dataResponse["Cost"].ToString()),
+                            time = Convert.ToDouble(_dataResponse["Time"].ToString()),
+                        };
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+                    }
                 }
             }
 

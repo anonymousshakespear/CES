@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Netcompany.Net.Cqs.Queries;
 using RoutePlanning.Domain.Locations;
-using RoutePlanning.Domain.Locations.Services;
+using RoutePlanning.Domain.Locations.Services.Interfaces;
 
 namespace RoutePlanning.Application.Locations.Queries.Distance;
 

@@ -11,7 +11,11 @@ public sealed class ConnectionConfiguration : IEntityTypeConfiguration<Connectio
         builder.HasKey(x => x.Id);
 
         builder.HasOne(x => x.Destination).WithMany();
+        builder.OwnsOne(x => x.Time);
 
         builder.OwnsOne(x => x.Distance);
+        builder.OwnsOne(x => x.Price);
+        builder.OwnsOne(x => x.EdgeWheight);
+
     }
 }

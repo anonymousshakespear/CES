@@ -43,14 +43,14 @@ public sealed class ShortestDistanceService : IShortestDistanceService
 
         foreach (var location in unvisitedLocations)
         {
-            shortestConnections[location] = (SourceConnection: null, Distance: int.MaxValue);
+            shortestConnections[location] = (SourceConnection: null, EdgeWeight: int.MaxValue);
         }
 
-        shortestConnections[start] = (SourceConnection: null, Distance: 0);
+        shortestConnections[start] = (SourceConnection: null, EdgeWeight: 0);
 
         while (unvisitedLocations.Count > 0)
         {
-            var location = unvisitedLocations.OrderBy(location => shortestConnections[location].Distance).First();
+            var location = unvisitedLocations.OrderBy(location => shortestConnections[location].EdgeWeight).First();
 
             if (location == end)
             {

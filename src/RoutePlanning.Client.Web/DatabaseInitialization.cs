@@ -12,21 +12,20 @@ public static class DatabaseInitialization
     {
         using var serviceScope = app.Services.CreateScope();
 
-        //var context = serviceScope.ServiceProvider.GetRequiredService<RoutePlanningDatabaseContext>();
-        //await context.Database.EnsureCreatedAsync();
+        var context = serviceScope.ServiceProvider.GetRequiredService<RoutePlanningDatabaseContext>();
+        await context.Database.EnsureCreatedAsync();
 
-        //var unitOfWorkManager = serviceScope.ServiceProvider.GetRequiredService<IUnitOfWorkManager>();
-        //await using (var unitOfWork = unitOfWorkManager.Initiate())
-        //{
+        var unitOfWorkManager = serviceScope.ServiceProvider.GetRequiredService<IUnitOfWorkManager>();
+        await using (var unitOfWork = unitOfWorkManager.Initiate())
+        {
 
-        //    //await SeedUsers(context);
-        //    //await SeedLocationsAndRoutes(context);
+            //await SeedUsers(context);
+            //await SeedLocationsAndRoutes(context);
 
-        //    //await SeedUserProfile(context);
+            //await SeedUserProfile(context);
 
-        //    unitOfWork.Commit();
-        //}
-        await Task.FromResult("");
+            unitOfWork.Commit();
+        }
     }
 
     private static async Task SeedLocationsAndRoutes(RoutePlanningDatabaseContext context)
@@ -44,9 +43,6 @@ public static class DatabaseInitialization
 
         var warsaw = new Location("Warsaw");
         await context.AddAsync(warsaw);
-
-
-
 
         //change the var name to distanceOrPrice / wieght´- it will be all right then :)
         CreateTwoWayConnection(Tanger, warsaw, 573);

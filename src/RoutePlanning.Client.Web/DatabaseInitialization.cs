@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Diagnostics;
 using Netcompany.Net.UnitOfWork;
 using RoutePlanning.Domain.Locations;
 using RoutePlanning.Domain.Users;
@@ -19,9 +18,10 @@ public static class DatabaseInitialization
         var unitOfWorkManager = serviceScope.ServiceProvider.GetRequiredService<IUnitOfWorkManager>();
         await using (var unitOfWork = unitOfWorkManager.Initiate())
         {
-            await SeedUsers(context);
-            await SeedLocationsAndRoutes(context);
 
+            await SeedUsers(context);
+
+            await SeedLocationsAndRoutes(context);
             unitOfWork.Commit();
         }
     }
@@ -41,9 +41,6 @@ public static class DatabaseInitialization
 
         var warsaw = new Location("Warsaw");
         await context.AddAsync(warsaw);
-
-        
-
 
 
         //change the var name to distanceOrPrice / wieght´- it will be all right then :)

@@ -130,20 +130,13 @@ public sealed class RoutesController : ControllerBase
 
                     var finalData = await response.Content.ReadAsStringAsync();
                     var _dataResponse = JToken.Parse(JsonConvert.SerializeObject(finalData));
-                    if (_dataResponse != null)
+
+                    var userResult = new BookSegmentResponseDto()
                     {
                         confirmationID = _dataResponse.Value<string>("ConfirmationID") ?? "0",
                         cost = Convert.ToDouble(_dataResponse?.Value<double>("Cost").ToString()),
                         time = Convert.ToDouble(_dataResponse?.Value<int>("Time").ToString()),
                     };
-
-                        var userResult = new BookSegmentResponseDto()
-                        {
-                            confirmationID = _dataResponse["ConfirmationID"] != null ? _dataResponse["ConfirmationID"].ToString() : "",
-                            cost = Convert.ToDouble(_dataResponse["Cost"].ToString()),
-                            time = Convert.ToDouble(_dataResponse["Time"].ToString()),
-                        };
-                    }
                 }
             }
 

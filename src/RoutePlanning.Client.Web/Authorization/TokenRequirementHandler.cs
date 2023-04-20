@@ -10,9 +10,9 @@ public sealed class TokenRequirementHandler : AuthorizationHandler<TokenRequirem
     {
         if (context.Resource is HttpContext httpContext)
         {
-            var apiToken = httpContext.Request.Headers["Token"];
+            var apiToken = httpContext.Request.Headers["ISSUER"];
 
-            if (apiToken == requirement.Token)
+            if (string.IsNullOrEmpty(apiToken))
             {
                 context.Succeed(requirement);
             }

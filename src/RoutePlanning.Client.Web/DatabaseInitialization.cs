@@ -15,17 +15,7 @@ public static class DatabaseInitialization
         var context = serviceScope.ServiceProvider.GetRequiredService<RoutePlanningDatabaseContext>();
         await context.Database.EnsureCreatedAsync();
 
-        var unitOfWorkManager = serviceScope.ServiceProvider.GetRequiredService<IUnitOfWorkManager>();
-        await using (var unitOfWork = unitOfWorkManager.Initiate())
-        {
-
-            //await SeedUsers(context);
-            //await SeedLocationsAndRoutes(context);
-
-            //await SeedUserProfile(context);
-
-            unitOfWork.Commit();
-        }
+        
     }
 
     private static async Task SeedLocationsAndRoutes(RoutePlanningDatabaseContext context)

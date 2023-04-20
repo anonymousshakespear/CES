@@ -14,11 +14,18 @@ public sealed class ShortestDistanceService : IShortestDistanceService
 
     public int CalculateShortestDistance(Location source, Location target)
     {
-        var locations = _locations.Include(l => l.Connections).ThenInclude(c => c.Destination);
+       // var locations = _locations.Include(l => l.Connections).ThenInclude(c => c.Destination);
 
-        var path = CalculateShortestPath(locations, source, target);
+        var path = CalculateShortestPath( source, target);
 
         return path.Sum(c => c.Distance);
+    }
+
+    public IEnumerable<Connection> CalculateShortestPath(Location source, Location target)
+    {
+        var locations = _locations.Include(l => l.Connections).ThenInclude(c => c.Destination);
+
+        return CalculateShortestPath(locations, source, target);
     }
 
     /// <summary>
@@ -31,6 +38,12 @@ public sealed class ShortestDistanceService : IShortestDistanceService
         var path = ConstructShortestPath(start, end, shortestConnections);
 
         return path;
+    }
+
+
+    public static (int, int) CalculateTimePrice(IEnumerable<Connection> path)
+    {
+        return (path.Sum(c => c.Time), path.Sum(c => c.Price));
     }
 
     /// <summary>

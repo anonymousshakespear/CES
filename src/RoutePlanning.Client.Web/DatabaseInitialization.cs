@@ -34,9 +34,6 @@ public static class DatabaseInitialization
         var warsaw = new Location("Warsaw");
         await context.AddAsync(warsaw);
 
-
-
-
         //change the var name to distanceOrPrice / wieght´- it will be all right then :)
         CreateTwoWayConnection(Tanger, warsaw, 573);
         CreateTwoWayConnection(Tanger, copenhagen, 763);

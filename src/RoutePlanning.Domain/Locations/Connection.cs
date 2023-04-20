@@ -10,12 +10,12 @@ public sealed class Connection : Entity<Connection>
 {
     public Connection(Location source, Location destination, Distance distance, Time time,Price price, EdgeWheight edgeWheight)
     {
-     Source = source;
-     Destination = destination;
-    Distance = distance;
-    Time = time;
-     Price = price;
-            EdgeWheight = edgeWheight;
+        Source = source;
+        Destination = destination;
+        Distance = distance;
+        Time = time;
+        Price = price;
+        EdgeWheight = edgeWheight;
     }
 
     public Connection(Location source, Location destination, Distance distance)

@@ -12,6 +12,6 @@ public sealed class UserProfileConfiguration : IEntityTypeConfiguration<UserProf
 
         builder.Property(x => x.UserName);
         builder.Property(x => x.Password);
-        builder.Property(x => x.isAdmin);
+        builder.Property(x => x.IsAdmin);
     }
 }

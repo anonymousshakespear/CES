@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Netcompany.Net.UnitOfWork;
+﻿using Netcompany.Net.UnitOfWork;
 using RoutePlanning.Domain.Locations;
 using RoutePlanning.Domain.Locations.Models;
 using RoutePlanning.Domain.Users;
@@ -23,7 +22,7 @@ public static class DatabaseInitialization
             //await SeedUsers(context);
             //await SeedLocationsAndRoutes(context);
 
-            await SeedUserProfile(context);
+            //await SeedUserProfile(context);
 
             unitOfWork.Commit();
         }
@@ -57,7 +56,7 @@ public static class DatabaseInitialization
 
     private static async Task SeedUserProfile(RoutePlanningDatabaseContext context)
     {
-        var alice = new UserProfile("test", "abc", "123456789", false);
+        var alice = new UserProfile("test", "abc", "123456789", 0);
         await context.AddAsync(alice);
     }
 

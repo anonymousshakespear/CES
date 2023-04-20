@@ -6,7 +6,7 @@ using RoutePlanning.Domain.Locations.Services.Interfaces;
 namespace RoutePlanning.Domain.Locations.Services;
 public class RoutingService: IRoutingService
 {
-    public static (int time, int price) FindShortestRoute(string cityFrom, string cityTo, ProductCategory productCategory, int weight)
+    public static (int time, int price) FindShortestRoute(string cityFrom, string cityTo, string productCategory, int weight)
     {
 
         var locationList = new List<Location>();
@@ -127,7 +127,7 @@ public class RoutingService: IRoutingService
         return connections;
     }
 
-    public static (int time, int price) CalculateTimeAndCostOfSegmet(string cityA, string cityB,ProductCategory productCategory,int weight)
+    public static (int time, int price) CalculateTimeAndCostOfSegmet(string cityA, string cityB,string productCategory,int weight)
     {
         
         var connections = new List<(string, string,int)>
@@ -179,7 +179,7 @@ public class RoutingService: IRoutingService
         return (time, price);
     }
 
-    private static (int priceRate,int timeRate) GetRates(ProductCategory productCategory, int weight)
+    private static (int priceRate,int timeRate) GetRates(string productCategory, int weight)
     {
         var priceRate = 8;
         var timeRate = 12;

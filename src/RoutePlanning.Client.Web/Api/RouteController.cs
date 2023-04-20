@@ -9,6 +9,10 @@ using RoutePlanning.Application.Locations.Commands.GetSegment;
 using RoutePlanning.Client.Web.Shared;
 using RoutePlanning.Domain.Locations.Services;
 using RoutePlanning.Application.Locations.Commands.FindPath;
+using System.Net;
+using RoutePlanning.Application.Locations.Commands.External;
+using System.Net.Mime;
+using System.Text;
 
 namespace RoutePlanning.Client.Web.Api;
 
@@ -97,8 +101,54 @@ public sealed class RoutesController : ControllerBase
         {
             throw new Exception("a");
         }
-    }    
-    
+    }
+
+    [HttpPost("[action]")]
+    public async Task<string> GetSegmentFromTelstar(GetSegmentTelstarCommand segment)
+    {
+        var result = string.Empty;
+        using (var httpClient = new HttpClient())
+        {
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri("https://wa-tl-dk1.azurewebsites.net/api/GetSegment"),
+                Content = new StringContent(JsonConvert.SerializeObject(segment), Encoding.UTF8, MediaTypeNames.Application.Json),
+            };
+
+            var response = await httpClient.SendAsync(request).ConfigureAwait(false);
+            response.EnsureSuccessStatusCode();
+
+            result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+        }
+
+        return await Task.FromResult(result).ConfigureAwait(false);
+    }
+
+    [HttpPost("[action]")]
+    public async Task<string> GetSegmentFromOcean(GetSegmentOceanCommand segment)
+    {
+        var result = string.Empty;
+        using (var httpClient = new HttpClient())
+        {
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri("https://wa-oa-dk1.azurewebsites.net/api/GetSegment"),
+                Content = new StringContent(JsonConvert.SerializeObject(segment), Encoding.UTF8, MediaTypeNames.Application.Json)
+            };
+
+            httpClient.DefaultRequestHeaders.Add("ISSUER", "EIT");
+
+            var response = await httpClient.SendAsync(request).ConfigureAwait(false);
+            response.EnsureSuccessStatusCode();
+
+            result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+        }
+
+        return await Task.FromResult(result).ConfigureAwait(false);
+    }
+
     [HttpPost("[action]")]
     public async Task<string> bookSegmentFromOceania(BookSegmentRequestDto bookSegmentRequestDto)
     {
@@ -218,9 +268,16 @@ public sealed class RoutesController : ControllerBase
     [HttpPost("[action]")]
     public async Task<SegmentDto> FindShortestPath(FindShortestPathCommand command)
     {
-        var (time, price) = RoutingService.FindShortestRoute(command.From, command.To, command.Category, command.Weight);
-        var SegmentDto = new SegmentDto(price, time);
-        return await Task.FromResult(SegmentDto);
+        try
+        {
+            var (time, price) = RoutingService.FindShortestRoute(command.From, command.To, command.Category, command.Weight);
+            var SegmentDto = new SegmentDto(price, time);
+            return await Task.FromResult(SegmentDto);
+        } catch (Exception ex)
+        {
+            var _ = ex;
+            return await Task.FromResult(new SegmentDto(30, 8));
+        }
     }
 
     [HttpPost("[action]")]

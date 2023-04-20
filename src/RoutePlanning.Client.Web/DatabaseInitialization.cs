@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Netcompany.Net.UnitOfWork;
 using RoutePlanning.Domain.Locations;
+using RoutePlanning.Domain.Locations.Models;
 using RoutePlanning.Domain.Users;
 using RoutePlanning.Infrastructure.Database;
 
@@ -19,9 +20,11 @@ public static class DatabaseInitialization
         await using (var unitOfWork = unitOfWorkManager.Initiate())
         {
 
-            await SeedUsers(context);
+            //await SeedUsers(context);
+            //await SeedLocationsAndRoutes(context);
 
-            await SeedLocationsAndRoutes(context);
+            await SeedUserProfile(context);
+
             unitOfWork.Commit();
         }
     }
@@ -48,6 +51,12 @@ public static class DatabaseInitialization
         CreateTwoWayConnection(Tanger, copenhagen, 763);
         CreateTwoWayConnection(Tanger, paris, 1054);
         CreateTwoWayConnection(copenhagen, paris, 1362);
+    }
+
+    private static async Task SeedUserProfile(RoutePlanningDatabaseContext context)
+    {
+        var alice = new UserProfile("test", "abc", "123456789", false);
+        await context.AddAsync(alice);
     }
 
     private static async Task SeedUsers(RoutePlanningDatabaseContext context)

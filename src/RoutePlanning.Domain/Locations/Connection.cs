@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics;
 using Netcompany.Net.DomainDrivenDesign.Models;
 
 namespace RoutePlanning.Domain.Locations;
@@ -11,6 +12,10 @@ public sealed class Connection : Entity<Connection>
         Source = source;
         Destination = destination;
         Distance = distance;
+        Time = time;
+        Price = price;
+        EdgeWheight = edgeWheight; 
+
     }
 
     private Connection()
@@ -25,4 +30,9 @@ public sealed class Connection : Entity<Connection>
     public Location Destination { get; private set; }
 
     public Distance Distance { get; private set; }
+
+    public Distance Distance { get; private set; }
+    public Distance Distance { get; private set; }
+    public Distance Distance { get; private set; }
+
 }

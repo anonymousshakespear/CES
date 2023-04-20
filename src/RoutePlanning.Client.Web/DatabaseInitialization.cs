@@ -1,4 +1,6 @@
-﻿using Netcompany.Net.UnitOfWork;
+﻿using System;
+using System.Collections;
+using Netcompany.Net.UnitOfWork;
 using RoutePlanning.Domain.Locations;
 using RoutePlanning.Domain.Users;
 using RoutePlanning.Infrastructure.Database;
@@ -26,8 +28,10 @@ public static class DatabaseInitialization
 
     private static async Task SeedLocationsAndRoutes(RoutePlanningDatabaseContext context)
     {
-        var berlin = new Location("Berlin");
-        await context.AddAsync(berlin);
+        
+        
+        var Tanger = new Location("Tanger");
+        await context.AddAsync(Tanger);
 
         var copenhagen = new Location("Copenhagen");
         await context.AddAsync(copenhagen);
@@ -38,9 +42,14 @@ public static class DatabaseInitialization
         var warsaw = new Location("Warsaw");
         await context.AddAsync(warsaw);
 
-        CreateTwoWayConnection(berlin, warsaw, 573);
-        CreateTwoWayConnection(berlin, copenhagen, 763);
-        CreateTwoWayConnection(berlin, paris, 1054);
+        
+
+
+
+        //change the var name to distanceOrPrice / wieght´- it will be all right then :)
+        CreateTwoWayConnection(Tanger, warsaw, 573);
+        CreateTwoWayConnection(Tanger, copenhagen, 763);
+        CreateTwoWayConnection(Tanger, paris, 1054);
         CreateTwoWayConnection(copenhagen, paris, 1362);
     }
 

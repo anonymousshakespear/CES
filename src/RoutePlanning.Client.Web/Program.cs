@@ -27,6 +27,15 @@ public sealed class Program
         builder.Services.AddSimpleAuthentication();
         builder.Services.AddApiTokenAuthorization(builder.Configuration);
 
+        builder.Services.AddControllers();
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
+        builder.Services.AddSpaStaticFiles(configuration =>
+        {
+            configuration.RootPath = "./wwwroot/react/build";
+
+        });
+
         builder.Host.ConfigureLoggingDefaults();
 
         var app = builder.Build();
@@ -38,6 +47,12 @@ public sealed class Program
             app.UseUnhandledExceptionMiddleware();
         }
 
+        app.Map(new PathString(""), client =>
+        {
+            client.UseSpaStaticFiles();
+            client.UseSpa(spa => { });
+        });
+
         app.UseValidationMiddleware();
         app.UseHttpsRedirection();
         app.UseStaticFiles();
@@ -47,6 +62,8 @@ public sealed class Program
         app.MapControllers();
         app.MapBlazorHub();
         app.MapFallbackToPage("/_Host");
+        app.UseSwagger();
+        app.UseSwaggerUI();
 
         app.Run();
     }

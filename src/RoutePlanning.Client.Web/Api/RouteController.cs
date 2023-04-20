@@ -1,20 +1,17 @@
 ﻿using System.Net.Http.Headers;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RoutePlanning.Application.Locations.Commands.BookSegment;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using RoutePlanning.Application.Locations.Commands.CreateTwoWayConnection;
 using RoutePlanning.Application.Locations.Commands.GetSegment;
-using RoutePlanning.Client.Web.Authorization;
 using RoutePlanning.Client.Web.Shared;
 
 namespace RoutePlanning.Client.Web.Api;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize(nameof(TokenRequirement))]
 public sealed class RoutesController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -24,7 +21,7 @@ public sealed class RoutesController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet("[action]")]
+    [HttpGet("hello")]
     public async Task<string> HelloWorld()
     {
         try

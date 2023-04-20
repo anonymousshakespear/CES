@@ -14,7 +14,7 @@ public sealed class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddRoutePlanningInfrastructure(builder.Configuration);
+        builder.Services.AddRoutePlanningInfrastructure();
         builder.Services.AddRoutePlanningApplication();
 
         builder.Services.AddCqs(options => options.UseValidation().UseUnitOfWork());

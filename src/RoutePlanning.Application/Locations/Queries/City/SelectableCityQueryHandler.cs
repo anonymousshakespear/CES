@@ -24,4 +24,5 @@ public sealed class SelectableCityQueryhandler : IQueryHandler<SelectableCityQue
     {
         throw new NotImplementedException();
     }
+
 }

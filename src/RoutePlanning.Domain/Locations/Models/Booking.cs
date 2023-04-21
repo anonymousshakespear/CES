@@ -9,8 +9,8 @@ public class Booking : AggregateRoot<Booking>
     public int PackageID { get; set; }
     public string ProductCategory { get; set; }
     public Guid UserID { get; set; }
-    public Guid StartingCityID { get; set; }
-    public Guid DestinationCityID { get; set; }
+    public string StartingCity { get; set; }
+    public string DestinationCity { get; set; }
     public float Height { get; set; }
     public float Weight { get; set; }
     public float Depth { get; set; }
@@ -21,13 +21,13 @@ public class Booking : AggregateRoot<Booking>
     public DateTime BookingDate { get; set; }
     public string Status { get; set; }
 
-    public Booking(int packageID, string productCategory, Guid userID, Guid startingCityID, Guid destinationCityID, float height, float weight, float depth, float length, string remark, string receiverInformation, float cost, DateTime bookingDate, string status)
+    public Booking(int packageID, string productCategory, Guid userID, string startingCity, string destinationCity, float height, float weight, float depth, float length, string remark, string receiverInformation, float cost, DateTime bookingDate, string status)
     {
         PackageID = packageID;
         ProductCategory = productCategory;
         UserID = userID;
-        StartingCityID = startingCityID;
-        DestinationCityID = destinationCityID;
+        StartingCity = startingCity;
+        DestinationCity = destinationCity;
         Height = height;
         Weight = weight;
         Depth = depth;

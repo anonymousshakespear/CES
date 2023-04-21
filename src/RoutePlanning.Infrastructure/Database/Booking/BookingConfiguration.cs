@@ -10,9 +10,9 @@ public sealed class BookingConfiguration : IEntityTypeConfiguration<Booking>
     {
         builder.HasKey(x => x.Id);
 
-        builder.Property(x => x.StartingCityID);
+        builder.Property(x => x.StartingCity);
 
-        builder.Property(x => x.DestinationCityID);
+        builder.Property(x => x.DestinationCity);
 
         builder.Property(x => x.UserID);
 

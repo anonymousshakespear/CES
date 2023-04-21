@@ -19,7 +19,7 @@ public class BookingService : IBookingService
     public async Task<BookingDto> Add(string ProductCategory, string User, string StartingCity, string DestinationCity, int Height, int Weight,
     int Depth, int Length, string Remark, string ReceiverInformation, double Cost, string BookingDate, string Status, int packageId)
     {
-        var booking = new Booking(packageId, ProductCategory, Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Height, Weight, Length, Depth, Remark, ReceiverInformation, (float)Cost, DateTime.Now, Status);
+        var booking = new Booking(packageId, ProductCategory, Guid.NewGuid(), StartingCity, DestinationCity, Height, Weight, Length, Depth, Remark, ReceiverInformation, (float)Cost, DateTime.Now, Status);
         await _routePlanningDatabaseContext.Database.EnsureCreatedAsync();
 
         await using (var unitOfWork = _unitOfWork.Initiate())
@@ -29,6 +29,6 @@ public class BookingService : IBookingService
             unitOfWork.Commit();
         }
 
-        return new BookingDto(Status);
+        return new BookingDto(booking.Id.ToString(), booking.StartingCity, booking.DestinationCity, (int)booking.Cost);
     }
 }

@@ -18,7 +18,7 @@ public sealed class SelectableBookingListQueryHandler : IQueryHandler<Selectable
     {
         return await _bookings
             .Select(l => new SelectableBooking(l, l.PackageID,  l.ProductCategory,
-                 l.UserID,  l.StartingCityID,  l.DestinationCityID,  l.Height,  l.Weight,  l.Depth, l.Length,
+                 l.UserID,  l.StartingCity,  l.DestinationCity,  l.Height,  l.Weight,  l.Depth, l.Length,
                  l.Remark,  l.ReceiverInformation, l.Cost, l.BookingDate, l.Status))
             .ToListAsync(cancellationToken);
     }

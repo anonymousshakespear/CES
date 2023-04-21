@@ -20,11 +20,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RoutePlanning.Application\RoutePlanning.Application.csproj" />
+    <ProjectReference Include="..\RoutePlanning.Domain\RoutePlanning.Domain.csproj" />
     <ProjectReference Include="..\RoutePlanning.Infrastructure\RoutePlanning.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="DTO\" />
   </ItemGroup>
 
   <ItemGroup>

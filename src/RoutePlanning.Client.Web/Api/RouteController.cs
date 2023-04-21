@@ -13,6 +13,9 @@ using System.Net;
 using RoutePlanning.Application.Locations.Commands.External;
 using System.Net.Mime;
 using System.Text;
+using RoutePlanning.Application.Locations.Commands.CreateUser;
+using RoutePlanning.Client.Web.DTO;
+using RoutePlanning.Client.Web.Service;
 
 namespace RoutePlanning.Client.Web.Api;
 
@@ -21,10 +24,12 @@ namespace RoutePlanning.Client.Web.Api;
 public sealed class RoutesController : ControllerBase
 {
     private readonly IMediator _mediator;
+    private readonly IBookingService _bookingService;
  
-    public RoutesController(IMediator mediator)
+    public RoutesController(IMediator mediator, IBookingService bookingService)
     {
         _mediator = mediator;
+        _bookingService = bookingService;
     }
 
     [HttpGet("hello")]
@@ -281,6 +286,13 @@ public sealed class RoutesController : ControllerBase
     }
 
     [HttpPost("[action]")]
+    public async Task<BookingDto> CreateBooking(CreateBookingCommand command)
+    {
+        var dto = await _bookingService.Add(command.ProductCategory, command.User, command.StartingCity, command.DestinationCity, command.Height, command.Weight, command.Depth, command.Length, command.Remark, command.ReceiverInformation, command.Cost, command.BookingDate, command.Status, 0);
+        return await Task.FromResult(dto);
+    }
+
+    [HttpPost("[action]")]
     public async Task<SegmentDto> GetSegment(GetSegmentCommand command)
     {
         var (time, price) = RoutingService.CalculateTimeAndCostOfSegmet(command.Start, command.End, string.Empty, command.Weight);
@@ -302,6 +314,4 @@ public sealed class RoutesController : ControllerBase
     {
         var _ = command;
     }
-
-
 }

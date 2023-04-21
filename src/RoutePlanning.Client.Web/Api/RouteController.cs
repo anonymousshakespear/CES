@@ -286,6 +286,7 @@ public sealed class RoutesController : ControllerBase
         var (time, price) = RoutingService.CalculateTimeAndCostOfSegmet(command.Start, command.End, string.Empty, command.Weight);
         var SegmentDto = new SegmentDto(price, time);
         return await Task.FromResult(SegmentDto);
+
     }
 
     [HttpPost("[action]")]
@@ -301,4 +302,6 @@ public sealed class RoutesController : ControllerBase
     {
         var _ = command;
     }
+
+
 }

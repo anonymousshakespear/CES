@@ -1,6 +1,8 @@
 ﻿
 using System.Collections;
 using System.Drawing;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using RoutePlanning.Domain.Locations.Services.Interfaces;
 
 namespace RoutePlanning.Domain.Locations.Services;
@@ -100,7 +102,13 @@ public class RoutingService: IRoutingService
         return (time, price);
     }
 
-    private static (int timeAB, int priceAB) CalculateTimeAndCostOfSegmetOceanic(string cityA, string cityB, string productCategory, int weight,string date)
+    private static  (int timeAB, int priceAB) CalculateTimeAndCostOfSegmetOceanicOld(string cityA, string cityB, string productCategory, int weight,string date)
+    {
+
+        return (5, 40);
+    }
+
+    private static (int timeAB, int priceAB) CalculateTimeAndCostOfSegmetOceanic(string cityA, string cityB, string productCategory, int weight, string date)
     {
         return (5, 40);
     }

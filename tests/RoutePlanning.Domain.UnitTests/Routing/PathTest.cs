@@ -1,4 +1,5 @@
-﻿using RoutePlanning.Domain.Locations;
+﻿
+using RoutePlanning.Domain.Locations;
 using RoutePlanning.Domain.Locations.Services;
 using RoutePlanning.Domain.Locations.Services.Interfaces;
 
@@ -62,10 +63,10 @@ public sealed class PathTest
         var productCategory = "";
         var weight = 10;
         var (time, price) = RoutingService.FindShortestRoute(cityA, cityB, productCategory, weight);
+
         Assert.Equal(5, time);
     }
 }
-
 
 public class StubProductCategory : ProductCategory
 {

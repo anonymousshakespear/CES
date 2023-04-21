@@ -1,16 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.073c9b0a.css",
-    "main.js": "/static/js/main.5960079c.js",
-    "static/js/787.627756db.chunk.js": "/static/js/787.627756db.chunk.js",
-    "static/media/logo.svg": "/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "main.css": "/static/css/main.a0d8d182.css",
+    "main.js": "/static/js/main.68370caa.js",
+    "static/js/787.4ca390c8.chunk.js": "/static/js/787.4ca390c8.chunk.js",
+    "static/media/ship.png": "/static/media/ship.34b41a969a5f450c3c73.png",
+    "static/media/cargo-ship.png": "/static/media/cargo-ship.59bfea28b43fcd24281a.png",
+    "static/media/sail-boat.svg": "/static/media/sail-boat.36c1a13d1cded8029c0b8696d0bb886f.svg",
     "index.html": "/index.html",
-    "main.073c9b0a.css.map": "/static/css/main.073c9b0a.css.map",
-    "main.5960079c.js.map": "/static/js/main.5960079c.js.map",
-    "787.627756db.chunk.js.map": "/static/js/787.627756db.chunk.js.map"
+    "static/media/tick-outline.svg": "/static/media/tick-outline.cbbe11ee5cdec2011917da6e5a94f469.svg",
+    "main.a0d8d182.css.map": "/static/css/main.a0d8d182.css.map",
+    "main.68370caa.js.map": "/static/js/main.68370caa.js.map",
+    "787.4ca390c8.chunk.js.map": "/static/js/787.4ca390c8.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.073c9b0a.css",
-    "static/js/main.5960079c.js"
+    "static/css/main.a0d8d182.css",
+    "static/js/main.68370caa.js"
   ]
 }

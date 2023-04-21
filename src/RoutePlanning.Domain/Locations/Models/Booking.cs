@@ -1,14 +1,16 @@
 ﻿
+using System.ComponentModel.DataAnnotations.Schema;
 using Netcompany.Net.DomainDrivenDesign.Models;
 
 namespace RoutePlanning.Domain.Locations.Models;
+[Table("Booking_T")]
 public class Booking : AggregateRoot<Booking>
 {
     public int PackageID { get; set; }
     public string ProductCategory { get; set; }
-    public int UserID { get; set; }
-    public int StartingCityID { get; set; }
-    public int DestinationCityID { get; set; }
+    public Guid UserID { get; set; }
+    public Guid StartingCityID { get; set; }
+    public Guid DestinationCityID { get; set; }
     public float Height { get; set; }
     public float Weight { get; set; }
     public float Depth { get; set; }
@@ -19,7 +21,7 @@ public class Booking : AggregateRoot<Booking>
     public DateTime BookingDate { get; set; }
     public string Status { get; set; }
 
-    public Booking(int packageID, string productCategory, int userID, int startingCityID, int destinationCityID, float height, float weight, float depth, float length, string remark, string receiverInformation, float cost, DateTime bookingDate, string status)
+    public Booking(int packageID, string productCategory, Guid userID, Guid startingCityID, Guid destinationCityID, float height, float weight, float depth, float length, string remark, string receiverInformation, float cost, DateTime bookingDate, string status)
     {
         PackageID = packageID;
         ProductCategory = productCategory;

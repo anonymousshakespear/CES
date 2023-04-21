@@ -4,6 +4,8 @@ using Netcompany.Net.Logging.Serilog;
 using Netcompany.Net.UnitOfWork;
 using Netcompany.Net.Validation;
 using RoutePlanning.Application;
+using RoutePlanning.Client.Web.Service;
+using RoutePlanning.Domain.Services;
 using RoutePlanning.Infrastructure;
 
 namespace RoutePlanning.Client.Web;
@@ -30,6 +32,9 @@ public sealed class Program
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+
+        builder.Services.AddScoped<IBookingService, BookingService>();
+
         builder.Services.AddSpaStaticFiles(configuration =>
         {
             configuration.RootPath = "./wwwroot/react/build";
@@ -66,6 +71,12 @@ public sealed class Program
         app.UseSwaggerUI(swagger => {
             swagger.RoutePrefix = "swg";
         });
+
+        app.UseCors(x => x
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials()
+            .SetIsOriginAllowed(origin => true));
 
         app.Run();
     }

@@ -8,8 +8,7 @@ public sealed class CheapestDistanceService : ICheapestDistanceService
 
     public CheapestDistanceService(IQueryable<Location> locations)
     {
-        _locations = locations;
-    }
+        _locations = locations; }
 
     public double CalculateCheapestDistance(Location source, Location target)
     {

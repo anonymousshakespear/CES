@@ -1,9 +1,16 @@
 ﻿
 using System.Collections;
 using System.Drawing;
+using System.Net.Mime;
+using System.Text;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using RoutePlanning.Domain.Locations.Services.Interfaces;
+
+
+
+
 
 namespace RoutePlanning.Domain.Locations.Services;
 public class RoutingService: IRoutingService
@@ -85,13 +92,14 @@ public class RoutingService: IRoutingService
         var shortestDistanceService = new ShortestDistanceService(locationList.AsQueryable());
 
         // Act
-        var locationFrom = cityDict[cityFrom];
-        var locationTo = cityDict[cityTo];
+        //var locationFrom = cityDict[cityFrom];
+        //var locationTo = cityDict[cityTo];
+        var locationFrom = cityDictOceanic[cityFrom];
+        var locationTo = cityDictOceanic[cityTo];
         IEnumerable<Connection> path;
         try
         {
             path = shortestDistanceService.CalculateShortestPath(locationFrom, locationTo);
-
         }
         catch
         {
@@ -102,14 +110,16 @@ public class RoutingService: IRoutingService
         return (time, price);
     }
 
-    private static  (int timeAB, int priceAB) CalculateTimeAndCostOfSegmetOceanicOld(string cityA, string cityB, string productCategory, int weight,string date)
-    {
+    //private static  (int timeAB, int priceAB) CalculateTimeAndCostOfSegmetOceanicOld(string cityA, string cityB, string productCategory, int weight,string date)
+    //{
+    //    return (5, 40);
+    //}
 
-        return (5, 40);
-    }
-
-    private static (int timeAB, int priceAB) CalculateTimeAndCostOfSegmetOceanic(string cityA, string cityB, string productCategory, int weight, string date)
+    private static (int timeAB, int priceAB) CalculateTimeAndCostOfSegmetOceanic(string cityA, string cityB, string productCategory, int weight, string date, int height=1, int width=1, int depth=1)
     {
+        //var segment = new GetSegmentOceanCommand(cityA, cityA, Weight, Height, Width, Depth, "productCategory");
+
+
         return (5, 40);
     }
 

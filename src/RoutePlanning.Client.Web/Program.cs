@@ -72,6 +72,12 @@ public sealed class Program
             swagger.RoutePrefix = "swg";
         });
 
+        app.UseCors(x => x
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials()
+            .SetIsOriginAllowed(origin => true));
+
         app.Run();
     }
     public static bool IsAllowOverride(HttpContext x)
